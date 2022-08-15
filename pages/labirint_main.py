@@ -11,38 +11,41 @@ class MainPage(WebPage):
 
         super().__init__(web_driver, url)
 
-
     # кнопка "Лабиринт"
     btn_labirint = WebElement(css_selector='.b-header-b-logo-e-logo')
 
     # локаторы строки поиска
-
     search_form = WebElement(id="searchform")
     search = WebElement(id="search-field")
 
-    # Search button
+    # кнопка "Поиск"
     btn_search = WebElement(class_name='b-header-b-search-e-btn')
 
     # Titles of the products in search results
-    #products_titles = ManyWebElements(xpath='//a[contains(@href, "/product-") and @title!=""]')
     products_titles = ManyWebElements(css_selector='.product-title-link')
 
 
-    # Prices of the products in search results
+    # Цены на товары
     products_prices = ManyWebElements(xpath='//div[@data-zone-name="price"]//span/*[1]')
+    # Окно авторизации
+    auth_window = WebElement(xpath='//div[contains(text(), "Полный доступ к Лабиринту")]')
+    # меню иконок
+    header_icon = WebElement(xpath='//div[@class="b-header-b-personal-wrapper"]')
     # кнопка "Сообщения"
-
+    btn_message = WebElement(xpath='//span[contains(text(), "Сообщения")]')
     # кнопка "Мой Лаб"
+    btn_my_lab = WebElement(css_selector='.b-header-b-personal-e-link.top-link-main.top-link-main_cabinet.js-b-autofade-wrap')
 
     # кнопка "Отложено"
     btn_postponed = WebElement(xpath='//span[contains(text(), "Отложено")]')
     # кнопка "Корзина"
     btn_cart = WebElement(xpath='//span[contains(text(), "Корзина")]')
 
-
     # локаторы кнопок в меню страницы
     # кнопка "Книги"
     btn_books = WebElement(css_selector='.b-header-b-menu-e-text[href="/books/"]')
+    btn_all_books = WebElement(css_selector='.b-menu-list-title.b-menu-list-title-first[href="/books/"]')
+
     # кнопка "Главное 2022"
     btn_best = WebElement(css_selector='.b-header-b-menu-e-text[href="/best/"]')
     # кнопка "Школа"
@@ -65,8 +68,9 @@ class MainPage(WebPage):
     btn_club = WebElement(css_selector='.b-header-b-menu-e-text[href="/club/"]')
     # Кнопка "выбора города"
     btn_geolock = WebElement(css_selector='.b-header-b-menu-e-text.js-header-menu-region-name')
-
-
+    # Строка выбора города
+    input_city = WebElement(id='region-post')
+    city_title = WebElement(css_selector='.region-location-icon-txt')
 
     # Строка меню
     header_menu = WebElement(xpath='//div[@class="b-header-b-menu-wrapper"]')
@@ -83,7 +87,7 @@ class MainPage(WebPage):
     # кнопка "Скидки"
     btn_sale = WebElement(css_selector='.b-header-b-sec-menu-e-link[href="/sale/"]')
     # кнопка "Контакты"
-    btn_contact = WebElement(css_selector='.b-header-b-sec-menu-e-link[href="/contact/"]')
+    btn_contact = WebElement(xpath='//a[contains(text(), "Контакты")]')
     # кнопка "Поддержка"
     btn_support = WebElement(css_selector='.b-header-b-sec-menu-e-link[href="/support/"]')
     # кнопка "Самовывоз"
@@ -92,8 +96,7 @@ class MainPage(WebPage):
     # кнопка "В КОРЗИНУ"
     btn_in_cart = WebElement(css_selector='.btn.buy-link.btn-primary')
 
-    # 29 test
-    # Фильтры 12 тестов
+    # Фильтр
     filter_list = WebElement(class_name='sorting-items')
     # фильтр "релевантные"
     filter_relevance = WebElement(xpath='//a[contains(text(), "релевантные")]')

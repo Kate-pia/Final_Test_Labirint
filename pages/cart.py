@@ -23,7 +23,7 @@ class MainPage(WebPage):
     # Переключатель "Отложенные:"
     postponed = WebElement(xpath='//a[contains(text(), "Отложенные: ")]')
     # Кнопка "Очистить корзину"
-    delete_cart = WebElement(xpath='//a[contains(text(), "Очистить корзину")]')
+    clear_cart = WebElement(xpath='//a[contains(text(), "Очистить корзину")]')
     # Кнопка "Переслать корзину"
     send_cart = WebElement(xpath='//span[contains(text(), "Переслать корзину")]')
     # Кнопка увеличить количество товара "+"

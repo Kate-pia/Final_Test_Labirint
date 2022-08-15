@@ -12,8 +12,30 @@ def test_check_btn_labirint(web_browser):
     assert page.get_current_url() == "https://www.labirint.ru/"
 
 
+def test_check_btn_message(web_browser):
+    """Проверка перехода на страницу "Сообщения" """
+
+    page = MainPage(web_browser)
+
+    page.btn_message.click()
+    text = page.auth_window.get_text()
+
+    assert text == "Полный доступ к Лабиринту"
+
+
+def test_check_btn_my_lab(web_browser):
+    """Проверка кнопки "Мой Лаб" """
+
+    page = MainPage(web_browser)
+
+    page.btn_my_lab.click()
+    text = page.auth_window.get_text()
+
+    assert text == "Полный доступ к Лабиринту"
+
+
 def test_check_btn_postponed(web_browser):
-    """Проверка перехода на страницу "Главное 2022" """
+    """Проверка перехода на страницу "Отложено" """
 
     page = MainPage(web_browser)
 
@@ -32,16 +54,6 @@ def test_check_btn_cart(web_browser):
     assert page.get_current_url() == "https://www.labirint.ru/cart/"
 
 
-def test_check_btn_message(web_browser):
-    """Проверка перехода на страницу "Сообщение" """
-
-    page = MainPage(web_browser)
-
-    page.btn_message.click()
-
-    assert page.get_current_url() == "https://www.labirint.ru/cabinet/putorder/"
-
-
 def test_check_btn_books(web_browser):
     """Проверка перехода на страницу "Книги" """
 
@@ -53,13 +65,13 @@ def test_check_btn_books(web_browser):
 
 
 def test_check_submenu_books(web_browser):
-    """Проверка открытия подменю "Книги" """
+    """Проверка открытия подменю "Книги" и перехода на страницу "Все книги" """
 
     page = MainPage(web_browser)
 
     submenu_books = page.btn_books.find()
     ActionChains(web_browser).move_to_element(submenu_books).perform()
-
+    page.btn_all_books.click()
     assert page.get_current_url() == "https://www.labirint.ru/books/"
 
 
@@ -158,13 +170,6 @@ def test_check_btn_club(web_browser):
 
     assert page.get_current_url() == "https://www.labirint.ru/club/"
 
-def test_check_btn_club(web_browser):
-    """Проверка перехода на страницу "Клуб" """
-    page = MainPage(web_browser)
-    page.btn_club.click()
-
-    assert page.get_current_url() == "https://www.labirint.ru/club/"
-
 
 def test_check_btn_delivery(web_browser):
     """Проверка перехода на страницу "Доставка и оплата" """
@@ -244,3 +249,16 @@ def test_check_btn_maps(web_browser):
     page.btn_maps.click()
 
     assert page.get_current_url() == "https://www.labirint.ru/maps/"
+
+
+def test_btn_geolock(testing_driver):
+    """Проверка смены "Местоположение" """
+
+    page = MainPage(testing_driver)
+
+    page.btn_geolock.click()
+    page.input_city.click()
+    page.input_city.send_keys("Санкт-Петербург")
+    page.input_city.send_keys(Keys.ENTER)
+    title = page.city_title.get_attribute('title')
+    assert title == "Санкт-Петербург"

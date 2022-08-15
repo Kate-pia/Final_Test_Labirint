@@ -1,8 +1,4 @@
-import time
-
 from pages.labirint_main import MainPage
-
-# Проверка на видимость элементов на странице
 
 
 def test_search_form_is_visible(web_browser):
@@ -22,11 +18,28 @@ def test_sec_menu_is_visible(web_browser):
 
 
 def test_header_menu_is_visible(web_browser):
-    """Строка "Поиск по Лабиринту" видна на странице"""
+    """ Строка "Поиск по Лабиринту" видна на странице """
 
     page = MainPage(web_browser)
 
     assert page.header_menu.is_visible()
+
+
+def test_scroll_page(web_browser):
+    """ Проверка скроллинга страницы"""
+
+    page = MainPage(web_browser)
+    page.scroll_down()
+
+    assert page.header_menu.is_visible()
+
+
+def test_header_icon_is_visible(web_browser):
+    """Строка "Поиск по Лабиринту" видна на странице"""
+
+    page = MainPage(web_browser)
+
+    assert page.header_icon.is_visible()
 
 
 def test_check_main_search(web_browser):
@@ -35,9 +48,9 @@ def test_check_main_search(web_browser):
     page = MainPage(web_browser)
 
     page.search = 'детектив'
-    page.search_run_button.click()
+    page.btn_search.click()
 
-    assert page.products_titles.count() == 60
+    assert page.products_titles.count() >= 1
 
 
 def test_check_wrong_input_in_search(web_browser):
@@ -50,12 +63,12 @@ def test_check_wrong_input_in_search(web_browser):
     page.btn_search.click()
 
     #  Проверяем, что пользователь может видеть список товаров
-    assert page.products_titles.count() == 60
+    assert page.products_titles.count() >= 1
 
     # Проверяем, что пользователь нашел соответствующие товары
     for title in page.products_titles.get_text():
         msg = 'Wrong product in search "{}"'.format(title)
-        assert 'Детектив' in title(), msg
+        assert 'Детектив' in title.lower(), msg
 
 
 def test_check_input_numbers_in_search(web_browser):
@@ -68,7 +81,7 @@ def test_check_input_numbers_in_search(web_browser):
     page.btn_search.click()
 
     # Проверяем, что пользователь может видеть список :
-    assert page.products_titles.count() > 0
+    assert page.products_titles.count() >= 1
 
     # Проверяем, что пользователь нашел соответствующие товары:
     for title in page.products_titles.get_text():
@@ -119,19 +132,6 @@ def test_check_sort_by_price(web_browser):
 
     # Make sure products are sorted by price correctly:
     assert all_prices == sorted(all_prices), "Sort by price doesn't work!"
-
-
-# Проверка кнопки "В корзину"
-def test_add_product_in_cart(web_browser):
-    """Проверка добавления товара в корзину """
-
-    page = MainPage(web_browser)
-
-    page.search.send_keys('сказка')
-    page.btn_search.click()
-    page.btn_in_cart.click()
-
-    assert page.products_titles.count() == 60
 
 
 # Проверка фильтров
@@ -234,7 +234,6 @@ def test_filter_name_back(web_browser):
     page.search.send_keys('комиксы')
     page.btn_search.click()
     page.filter_list.click()
-    page.scroll_down()
-    time.sleep(5)
+    page.filter_name_back.find()
     page.filter_name_back.click()
 
