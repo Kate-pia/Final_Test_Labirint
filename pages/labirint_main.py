@@ -34,7 +34,8 @@ class MainPage(WebPage):
     # кнопка "Сообщения"
     btn_message = WebElement(xpath='//span[contains(text(), "Сообщения")]')
     # кнопка "Мой Лаб"
-    btn_my_lab = WebElement(css_selector='.b-header-b-personal-e-link.top-link-main.top-link-main_cabinet.js-b-autofade-wrap')
+    btn_my_lab = WebElement(css_selector='.b-header-b-personal-e-link.top-link-main.top-link-main_cabinet.'
+                                         'js-b-autofade-wrap')
 
     # кнопка "Отложено"
     btn_postponed = WebElement(xpath='//span[contains(text(), "Отложено")]')
@@ -61,7 +62,8 @@ class MainPage(WebPage):
     # кнопка "Сувениры"
     btn_souvenir = WebElement(xpath='//a[@title="Сувениры, альбомы для фотографий, фоторамки, календари."]')
     # кнопка "Журналы"
-    btn_journals = WebElement(xpath='//a[@title="Литературные журналы: художественные и публицистические, поэтические."]')
+    btn_journals = WebElement(xpath='//a[@title="Литературные журналы: художественные и публицистические, '
+                                    'поэтические."]')
     # кнопка "Товары для дома"
     btn_household = WebElement(xpath='//a[@title="Товары для дома"]')
     # кнопка "Клуб"
@@ -93,8 +95,7 @@ class MainPage(WebPage):
     # кнопка "Самовывоз"
     btn_maps = WebElement(css_selector='.b-header-b-sec-menu-e-link[href="/maps/"]')
 
-    # кнопка "В КОРЗИНУ"
-    btn_in_cart = WebElement(css_selector='.btn.buy-link.btn-primary')
+
 
     # Фильтр
     filter_list = WebElement(class_name='sorting-items')
@@ -110,16 +111,55 @@ class MainPage(WebPage):
     filter_cheap = WebElement(xpath='//a[contains(text(), "дешевые")]')
     # фильтр "дорогие"
     filter_expensive = WebElement(xpath='//a[contains(text(), "дорогие")]')
+    expensive = WebElement(xpath='//span[contains(text(), Сначала дорогие)]')
     # фильтр "с макс. скидкой"
     filter_max_sale = WebElement(xpath='//a[contains(text(), "с макс. скидкой")]')
     # фильтр "по названию А-Я"
-    filter_name_forward = WebElement(xpath='//a[contains(text(), "по названию А&rarr;Я")]')
+    filter_name_forward = WebElement(xpath='//a[@href="?stype=0&order=name&way=forward"]')
     # фильтр "по названию Я-А"
-    filter_name_back = WebElement(xpath='//a[contains(text(), "по названию Я&rarr;А")]')
+    filter_name_back = WebElement(xpath='//a[@href="?stype=0&order=name&way=back"]')
     # фильтр "по автору А-Я"
-    filter_author_forward = WebElement(xpath='//a[contains(text(), "по автору А&rarr;Я")]')
+    filter_author_forward = WebElement(xpath='//a[@href="?stype=0&order=author&way=forward"]')
     # фильтр "по автору Я-А"
-    filter_author_back = WebElement(xpath='//a[contains(text(), "по автору Я&rarr;А")]')
+    filter_author_back = WebElement(xpath='//a[@href="?stype=0&order=author&way=back"]')
+
+    # подвал страницы
+    footer = WebElement(xpath='//div[@class="b-rfooter-wrapper"]')
+
+    # Локаторы корзины
+    # Пример товара для добавления в корзину
+    product = WebElement(xpath='//a[@href="/books/829644/"]')
+    # кнопка "Добавить в корзину"
+    btn_in_cart = WebElement(css_selector='.btn.btn-small.btn-primary.btn-buy')
+    # кнопка "Оформить"
+    btn_to_cart = WebElement(css_selector='.btn.btn-small.btn-more.tobasket')
+    # кнопка "Добавить в отложенное"
+    btn_fave = WebElement(css_selector='.fave')
+
+    # Счетчик товаров в корзине
+    counter_cart = WebElement(css_selector='.b-header-b-personal-e-icon-count-m-cart.basket-in-cart-a')
+    # Счетчик товаров в "отложено"
+    counter_postponed = WebElement(css_selector='.b-header-b-personal-e-icon-count-m-putorder.basket-in-dreambox-a')
+
+    # Кнопка "Очистить корзину"
+    clear_cart = WebElement(xpath='//a[contains(text(), "Очистить корзину")]')
+    # Кнопка "Восстановить удаленное"
+    restore_cart = WebElement(xpath='//a[contains(text(), "Восстановить удаленное")]')
+    # Кнопка увеличить количество товара "+"
+    btn_increase = WebElement(xpath='//span[@class="btn btn-increase btn-increase-cart"]')
+    # Кнопка уменишить количество товара "-"
+    btn_lessen = WebElement(css_selector='.btn.btn-lessen.btn-lessen-cart')
+    # Кнопка "Сертификаты и купоны"
+
+    # Поле ввода кода скидки для авторизации
+    input_code_email = WebElement(css_selector='.full-input__input.formvalidate-error[type="text"]')
+
+    # Кнопка "Забыл ввести код скидки"
+
+    # Кнопка "Перейти к оформлению"
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 import os
 from pages.base import WebPage
-from pages.elements import WebElement, ManyWebElements
+from pages.elements import WebElement
 
 
 class MainPage(WebPage):
@@ -11,33 +11,19 @@ class MainPage(WebPage):
 
         super().__init__(web_driver, url)
 
+
     # Переключатель "Моя корзина:"
+    # кнопка "Поиск"
+    search = WebElement(id="search-field")
+    btn_search = WebElement(class_name='b-header-b-search-e-btn')
     # Страница товара
-    btn_product = WebElement(xpath='//a[@id="buy797977"]')
+    prod = WebElement(xpath='//a[@href="/books/829644/"]')
+
     # кнопка "В КОРЗИНУ"
-    btn_in_cart = WebElement(css_selector='.btn.buy-link.btn-primary')
+    btn_in_carts = WebElement(css_selector='.btn.btn-small.btn-primary.btn-buy')
+    btn_pro = WebElement(id="buy829644")
     cart_btn = WebElement(
         css_selector='.b-header-b-personal-e-link.top-link-main.analytics-click-js.cart-icon-js[href="/cart/"]')
     # Кнопка "Оформить корзину"
     btn_cart = WebElement(xpath='//a[href="/cart/"]')
-    # Переключатель "Отложенные:"
-    postponed = WebElement(xpath='//a[contains(text(), "Отложенные: ")]')
-    # Кнопка "Очистить корзину"
-    clear_cart = WebElement(xpath='//a[contains(text(), "Очистить корзину")]')
-    # Кнопка "Переслать корзину"
-    send_cart = WebElement(xpath='//span[contains(text(), "Переслать корзину")]')
-    # Кнопка увеличить количество товара "+"
-    btn_increase = WebElement(class_name="btn.btn-increase.btn-increase-cart")
-    # Кнопка уменишить количество товара "-"
-    btn_lessen = WebElement(class_name="btn.btn-lessen.btn-lessen-cart")
-    # Кнопка "Сертификаты и купоны"
 
-    # Поле ввода кода скидки для авторизации
-    input_code_email = WebElement(css_selector='.full-input__input.formvalidate-error[type="text"]')
-
-    # Кнопка "Забыл ввести код скидки"
-
-    # Кнопка "Перейти к оформлению"
-
-    # Кнопка "Восстановить удаленное"
-    restore_cart = WebElement(xpath='//a[contains(text(), "Восстановить удаленное")]')

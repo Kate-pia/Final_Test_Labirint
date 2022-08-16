@@ -1,4 +1,12 @@
 from pages.labirint_main import MainPage
+import pytest
+
+
+# @pytest.mark.xfail
+# def test_loud_page(web_browser):
+#     page = MainPage(web_browser)
+#     page.wait_page_loaded()
+#     assert page.check_js_errors()
 
 
 def test_search_form_is_visible(web_browser):
@@ -25,21 +33,21 @@ def test_header_menu_is_visible(web_browser):
     assert page.header_menu.is_visible()
 
 
-def test_scroll_page(web_browser):
-    """ Проверка скроллинга страницы"""
-
-    page = MainPage(web_browser)
-    page.scroll_down()
-
-    assert page.header_menu.is_visible()
-
-
 def test_header_icon_is_visible(web_browser):
-    """Строка "Поиск по Лабиринту" видна на странице"""
+    """ Меню с иконками видны на странице"""
 
     page = MainPage(web_browser)
 
     assert page.header_icon.is_visible()
+
+
+def test_footer_is_visible(web_browser):
+    """ Меню в подвале видно на странице"""
+
+    page = MainPage(web_browser)
+    page.scroll_down()
+
+    assert page.footer.is_visible()
 
 
 def test_check_main_search(web_browser):
@@ -54,12 +62,12 @@ def test_check_main_search(web_browser):
 
 
 def test_check_wrong_input_in_search(web_browser):
-    """ Проверка, что ввод с неправильной раскладки клавиатуры работает правильно """
+    """ Проверка, что ввод с неправильной раскладки клавиатуры работает корректно """
 
     page = MainPage(web_browser)
 
     # Попробуйте ввести запрос "Детектив" с английской раскладки:
-    page.search = 'Ltntrnbd'
+    page.search = 'Ujujkm'
     page.btn_search.click()
 
     #  Проверяем, что пользователь может видеть список товаров
@@ -68,11 +76,11 @@ def test_check_wrong_input_in_search(web_browser):
     # Проверяем, что пользователь нашел соответствующие товары
     for title in page.products_titles.get_text():
         msg = 'Wrong product in search "{}"'.format(title)
-        assert 'Детектив' in title.lower(), msg
+        assert 'гоголь' in title.lower(), msg
 
 
 def test_check_input_numbers_in_search(web_browser):
-    """ Проверка, что при вводе цифр поиск работает нормально. """
+    """ Проверка, что при вводе цифр поиск работает корректно """
 
     page = MainPage(web_browser)
 
@@ -151,13 +159,13 @@ def test_filter_leaders(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('азбука')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_leaders.click()
-    #assert 'Сначала лидеры продаж' in page.get_current_url()
-    #assert page.get_current_url() == "https://www.labirint.ru/search/%D0%B4%D0%B5%D1%82%D0%B5%D0%BA%D1%82%D0%B8%D0%B2/?stype=0&order=popularity&way=forward"
 
+    assert page.get_current_url() == "https://www.labirint.ru/search/%D0%B0%D0%B7%D0%B1%D1%83%D0%BA%D0%B0/?stype=0"
+    #https://www.labirint.ru/search/%D0%B0%D0%B7%D0%B1%D1%83%D0%BA%D0%B0/?stype=0
 
 def test_filter_new(web_browser):
     """Проверка фильтра "новинки" """
@@ -179,6 +187,7 @@ def test_filter_review(web_browser):
     page.btn_search.click()
     page.filter_list.click()
     page.filter_review.click()
+    assert page.get_relative_url() == 'https://www.labirint.ru/search/%D0%BA%D0%BE%D0%BC%D0%B8%D0%BA%D1%81%D1%8B/?stype=0&order=review&way=back'
 
 
 def test_filter_cheap(web_browser):
@@ -201,6 +210,9 @@ def test_filter_expensive(web_browser):
     page.btn_search.click()
     page.filter_list.click()
     page.filter_expensive.click()
+    page.refresh()
+    # assert page.get_current_url().get_text("Сначала дорогие") == "Сначала дорогие"
+    assert page.get_current_url() == 'https://www.labirint.ru/search/%D0%BA%D0%BE%D0%BC%D0%B8%D0%BA%D1%81%D1%8B/?stype=0&order=price&way=back'
 
 
 def test_filter_max_sale(web_browser):
@@ -222,8 +234,10 @@ def test_filter_name_forward(web_browser):
     page.search.send_keys('комиксы')
     page.btn_search.click()
     page.filter_list.click()
-    page.scroll_down()
+    page.filter_name_forward.scroll_to_element()
     page.filter_name_forward.click()
+    page.wait_page_loaded()
+
 
 
 def test_filter_name_back(web_browser):
@@ -234,6 +248,30 @@ def test_filter_name_back(web_browser):
     page.search.send_keys('комиксы')
     page.btn_search.click()
     page.filter_list.click()
-    page.filter_name_back.find()
+    page.filter_name_back.scroll_to_element()
     page.filter_name_back.click()
+
+
+def test_filter_author_forward(web_browser):
+    """Проверка фильтра "по автору А-Я" """
+
+    page = MainPage(web_browser)
+
+    page.search.send_keys('комиксы')
+    page.btn_search.click()
+    page.filter_list.click()
+    page.filter_author_forward.scroll_to_element()
+    page.filter_author_forward.click()
+
+
+def test_filter_author_back(web_browser):
+    """Проверка фильтра "по автору Я-А" """
+
+    page = MainPage(web_browser)
+
+    page.search.send_keys('комиксы')
+    page.btn_search.click()
+    page.filter_list.click()
+    page.filter_author_back.scroll_to_element()
+    page.filter_author_back.click()
 

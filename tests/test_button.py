@@ -2,6 +2,7 @@ from pages.labirint_main import MainPage
 from selenium.webdriver import ActionChains
 
 
+
 def test_check_btn_labirint(web_browser):
     """Проверка перехода на страницу "Лабиринт" при нажатии на логотип """
 
@@ -251,14 +252,19 @@ def test_check_btn_maps(web_browser):
     assert page.get_current_url() == "https://www.labirint.ru/maps/"
 
 
-def test_btn_geolock(testing_driver):
+def test_btn_geolock(web_browser):
     """Проверка смены "Местоположение" """
 
-    page = MainPage(testing_driver)
+    page = MainPage(web_browser)
 
     page.btn_geolock.click()
     page.input_city.click()
-    page.input_city.send_keys("Санкт-Петербург")
-    page.input_city.send_keys(Keys.ENTER)
+    page.input_city.send_keys("Москва")
+    page.input_city.send_keys(Key.enter)
     title = page.city_title.get_attribute('title')
-    assert title == "Санкт-Петербург"
+    assert title == "Москва"
+
+
+
+
+
