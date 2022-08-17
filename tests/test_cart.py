@@ -1,11 +1,10 @@
-from pages.cart import MainPage
-from pages.labirint_main import MainPage
+from pages.cart import CartPage
 
 
 def test_add_product_in_cart(web_browser):
     """Проверка добавления товара в корзину """
 
-    page = MainPage(web_browser)
+    page = CartPage(web_browser)
 
     page.search.send_keys('тестирование')
     page.btn_search.click()
@@ -20,11 +19,10 @@ def test_add_product_in_cart(web_browser):
 def test_clear_cart(web_browser):
     """ Проверка кнопки "Очистить корзину" """
 
-    page = MainPage(web_browser)
+    page = CartPage(web_browser)
 
     page.search.send_keys('тестирование')
     page.btn_search.click()
-
     page.product.click()
     page.btn_in_cart.click()
     page.btn_to_cart.click()
@@ -36,7 +34,7 @@ def test_clear_cart(web_browser):
 def test_restore_cart(web_browser):
     """ Проверка кнопки "Восстановить удаленное" из корзины """
 
-    page = MainPage(web_browser)
+    page = CartPage(web_browser)
 
     page.search.send_keys('тестирование')
     page.btn_search.click()
@@ -55,7 +53,7 @@ def test_restore_cart(web_browser):
 def test_add_in_postponed(web_browser):
     """Проверка добавления товара в Отложенное """
 
-    page = MainPage(web_browser)
+    page = CartPage(web_browser)
 
     page.search.send_keys('тестирование')
     page.btn_search.click()
@@ -68,9 +66,9 @@ def test_add_in_postponed(web_browser):
 
 
 def test_increase_product_in_cart(web_browser):
-    """Проверка кнопки "Переслать корзину" """
+    """Проверка кнопки "+" увеличения колчества товара """
 
-    page = MainPage(web_browser)
+    page = CartPage(web_browser)
 
     page.search.send_keys('тестирование')
     page.btn_search.click()
@@ -79,16 +77,16 @@ def test_increase_product_in_cart(web_browser):
     page.btn_in_cart.click()
     page.btn_to_cart.click()
     assert page.product.is_visible()
-    page.btn_increase.scroll_to_element()
+
     page.btn_increase.click()
-    page.refresh()
+    page.wait_page_loaded()
     assert page.counter_cart.get_text() == '2'
 
 
 def test_lessen_product_in_cart(web_browser):
-    """Проверка кнопки "Переслать корзину" """
+    """Проверка кнопки "-" уменьшения количества товара """
 
-    page = MainPage(web_browser)
+    page = CartPage(web_browser)
 
     page.search.send_keys('тестирование')
     page.btn_search.click()
@@ -96,11 +94,31 @@ def test_lessen_product_in_cart(web_browser):
     page.product.click()
     page.btn_in_cart.click()
     page.btn_to_cart.click()
-    assert page.product.is_visible()
-    page.btn_lessen.scroll_to_element()
-    page.btn_lessen.click()
-    page.refresh()
-    assert page.counter_cart.get_text() == '0'
+    assert page.btn_increase.is_clickable()
+    page.btn_increase.click()
+    # page.btn_increase.click()
+    # page.btn_lessen.click()
+    # page.refresh()
+    assert page.btn_quantity.get_text() == '2'
+
+
+def test_checkout_order(web_browser):
+    """Проверка кнопки "Перейти к оформлению" """
+
+    page = CartPage(web_browser)
+
+    page.search.send_keys('тестирование')
+    page.btn_search.click()
+
+    page.product.click()
+    page.btn_in_cart.click()
+    page.btn_to_cart.click()
+    assert page.btn_checkout.is_clickable()
+    page.btn_checkout.click()
+    page.wait_page_loaded()
+    #
+    # assert page.get_current_url() == "https://www.labirint.ru/basket/checkout/"
+
 
 
 

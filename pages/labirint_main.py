@@ -21,14 +21,12 @@ class MainPage(WebPage):
     # кнопка "Поиск"
     btn_search = WebElement(class_name='b-header-b-search-e-btn')
 
-    # Titles of the products in search results
+    # Названия товаров в результате поиска
     products_titles = ManyWebElements(css_selector='.product-title-link')
 
-
-    # Цены на товары
-    products_prices = ManyWebElements(xpath='//div[@data-zone-name="price"]//span/*[1]')
     # Окно авторизации
     auth_window = WebElement(xpath='//div[contains(text(), "Полный доступ к Лабиринту")]')
+
     # меню иконок
     header_icon = WebElement(xpath='//div[@class="b-header-b-personal-wrapper"]')
     # кнопка "Сообщения"
@@ -36,7 +34,6 @@ class MainPage(WebPage):
     # кнопка "Мой Лаб"
     btn_my_lab = WebElement(css_selector='.b-header-b-personal-e-link.top-link-main.top-link-main_cabinet.'
                                          'js-b-autofade-wrap')
-
     # кнопка "Отложено"
     btn_postponed = WebElement(xpath='//span[contains(text(), "Отложено")]')
     # кнопка "Корзина"
@@ -45,8 +42,8 @@ class MainPage(WebPage):
     # локаторы кнопок в меню страницы
     # кнопка "Книги"
     btn_books = WebElement(css_selector='.b-header-b-menu-e-text[href="/books/"]')
+    # кнопка "Все книги" из выпадающего списка "Книги"
     btn_all_books = WebElement(css_selector='.b-menu-list-title.b-menu-list-title-first[href="/books/"]')
-
     # кнопка "Главное 2022"
     btn_best = WebElement(css_selector='.b-header-b-menu-e-text[href="/best/"]')
     # кнопка "Школа"
@@ -68,11 +65,6 @@ class MainPage(WebPage):
     btn_household = WebElement(xpath='//a[@title="Товары для дома"]')
     # кнопка "Клуб"
     btn_club = WebElement(css_selector='.b-header-b-menu-e-text[href="/club/"]')
-    # Кнопка "выбора города"
-    btn_geolock = WebElement(css_selector='.b-header-b-menu-e-text.js-header-menu-region-name')
-    # Строка выбора города
-    input_city = WebElement(id='region-post')
-    city_title = WebElement(css_selector='.region-location-icon-txt')
 
     # Строка меню
     header_menu = WebElement(xpath='//div[@class="b-header-b-menu-wrapper"]')
@@ -94,8 +86,6 @@ class MainPage(WebPage):
     btn_support = WebElement(css_selector='.b-header-b-sec-menu-e-link[href="/support/"]')
     # кнопка "Самовывоз"
     btn_maps = WebElement(css_selector='.b-header-b-sec-menu-e-link[href="/maps/"]')
-
-
 
     # Фильтр
     filter_list = WebElement(class_name='sorting-items')
@@ -123,40 +113,17 @@ class MainPage(WebPage):
     # фильтр "по автору Я-А"
     filter_author_back = WebElement(xpath='//a[@href="?stype=0&order=author&way=back"]')
 
-    # подвал страницы
+    # "подвал" страницы
     footer = WebElement(xpath='//div[@class="b-rfooter-wrapper"]')
 
-    # Локаторы корзины
-    # Пример товара для добавления в корзину
-    product = WebElement(xpath='//a[@href="/books/829644/"]')
-    # кнопка "Добавить в корзину"
-    btn_in_cart = WebElement(css_selector='.btn.btn-small.btn-primary.btn-buy')
-    # кнопка "Оформить"
-    btn_to_cart = WebElement(css_selector='.btn.btn-small.btn-more.tobasket')
-    # кнопка "Добавить в отложенное"
-    btn_fave = WebElement(css_selector='.fave')
 
-    # Счетчик товаров в корзине
-    counter_cart = WebElement(css_selector='.b-header-b-personal-e-icon-count-m-cart.basket-in-cart-a')
-    # Счетчик товаров в "отложено"
-    counter_postponed = WebElement(css_selector='.b-header-b-personal-e-icon-count-m-putorder.basket-in-dreambox-a')
+    # btn_help_order = WebElement(xpath='//*[@id="body-top"]/div[5]/div[2]/div/div[4]/div[2]/div[2]/ul/li[2]/a')
+    btn_pay = WebElement(css_selector='.b-rfooter-e-item[href="/help/?clause=132"]')
+    # btn_help_order = WebElement(css_selector='b-rfooter-e-item-link analytics-click-js[href="/help/order/"]')
+    btn_help_order = WebElement(xpath='//a[contains(text(), "Как сделать заказ")]')
 
-    # Кнопка "Очистить корзину"
-    clear_cart = WebElement(xpath='//a[contains(text(), "Очистить корзину")]')
-    # Кнопка "Восстановить удаленное"
-    restore_cart = WebElement(xpath='//a[contains(text(), "Восстановить удаленное")]')
-    # Кнопка увеличить количество товара "+"
-    btn_increase = WebElement(xpath='//span[@class="btn btn-increase btn-increase-cart"]')
-    # Кнопка уменишить количество товара "-"
-    btn_lessen = WebElement(css_selector='.btn.btn-lessen.btn-lessen-cart')
-    # Кнопка "Сертификаты и купоны"
 
-    # Поле ввода кода скидки для авторизации
-    input_code_email = WebElement(css_selector='.full-input__input.formvalidate-error[type="text"]')
 
-    # Кнопка "Забыл ввести код скидки"
-
-    # Кнопка "Перейти к оформлению"
 
 
 

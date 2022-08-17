@@ -1,12 +1,4 @@
 from pages.labirint_main import MainPage
-import pytest
-
-
-# @pytest.mark.xfail
-# def test_loud_page(web_browser):
-#     page = MainPage(web_browser)
-#     page.wait_page_loaded()
-#     assert page.check_js_errors()
 
 
 def test_search_form_is_visible(web_browser):
@@ -18,7 +10,7 @@ def test_search_form_is_visible(web_browser):
 
 
 def test_sec_menu_is_visible(web_browser):
-    """Строка "Поиск по Лабиринту" видна на странице"""
+    """ Меню с контактной информацией видно на странице"""
 
     page = MainPage(web_browser)
 
@@ -26,7 +18,7 @@ def test_sec_menu_is_visible(web_browser):
 
 
 def test_header_menu_is_visible(web_browser):
-    """ Строка "Поиск по Лабиринту" видна на странице """
+    """ Строка с главным меню товаров видно на странице """
 
     page = MainPage(web_browser)
 
@@ -34,7 +26,7 @@ def test_header_menu_is_visible(web_browser):
 
 
 def test_header_icon_is_visible(web_browser):
-    """ Меню с иконками видны на странице"""
+    """ Меню с иконками видно на странице"""
 
     page = MainPage(web_browser)
 
@@ -42,7 +34,7 @@ def test_header_icon_is_visible(web_browser):
 
 
 def test_footer_is_visible(web_browser):
-    """ Меню в подвале видно на странице"""
+    """ Меню в подвала видно на странице"""
 
     page = MainPage(web_browser)
     page.scroll_down()
@@ -119,39 +111,19 @@ def test_photo_product(web_browser):
     assert page.products_titles.get_attribute('src') != ''
 
 
-def test_check_sort_by_price(web_browser):
-    """ Проверка сортировки продуктов """
-
-    page = MainPage(web_browser)
-
-    page.search = 'роман'
-    page.btn_search.click()
-
-    # Прокрутка до элемента, чтобы он стал виден пользователю
-    page.sort_products_by_price.scroll_to_element()
-    page.sort_products_by_price.click()
-    page.wait_page_loaded()
-
-    # Получение цен всех выведенных продуктов
-    all_prices = page.products_prices.get_text()
-
-    # Конвертирование всех цен из строк в числа
-    all_prices = [float(p.replace(' ', '')) for p in all_prices]
-
-    # Make sure products are sorted by price correctly:
-    assert all_prices == sorted(all_prices), "Sort by price doesn't work!"
-
-
 # Проверка фильтров
 def test_filter_relevance(web_browser):
     """Проверка фильтра "релевантные" """
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_relevance.click()
+    page.wait_page_loaded()
+
+    assert page.get_current_url() == "https://www.labirint.ru/search/python/?stype=0&order=relevance&way=back"
 
 
 def test_filter_leaders(web_browser):
@@ -159,23 +131,26 @@ def test_filter_leaders(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('азбука')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_leaders.click()
+    page.wait_page_loaded()
 
-    assert page.get_current_url() == "https://www.labirint.ru/search/%D0%B0%D0%B7%D0%B1%D1%83%D0%BA%D0%B0/?stype=0"
-    #https://www.labirint.ru/search/%D0%B0%D0%B7%D0%B1%D1%83%D0%BA%D0%B0/?stype=0
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=popularity&way=forward'
+
 
 def test_filter_new(web_browser):
     """Проверка фильтра "новинки" """
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_new.click()
+    page.wait_page_loaded()
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=date&way=back'
 
 
 def test_filter_review(web_browser):
@@ -183,11 +158,13 @@ def test_filter_review(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_review.click()
-    assert page.get_relative_url() == 'https://www.labirint.ru/search/%D0%BA%D0%BE%D0%BC%D0%B8%D0%BA%D1%81%D1%8B/?stype=0&order=review&way=back'
+    page.wait_page_loaded()
+
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=review&way=back'
 
 
 def test_filter_cheap(web_browser):
@@ -195,10 +172,13 @@ def test_filter_cheap(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_cheap.click()
+    page.wait_page_loaded()
+
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=price&way=forward'
 
 
 def test_filter_expensive(web_browser):
@@ -206,13 +186,13 @@ def test_filter_expensive(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_expensive.click()
-    page.refresh()
-    # assert page.get_current_url().get_text("Сначала дорогие") == "Сначала дорогие"
-    assert page.get_current_url() == 'https://www.labirint.ru/search/%D0%BA%D0%BE%D0%BC%D0%B8%D0%BA%D1%81%D1%8B/?stype=0&order=price&way=back'
+    page.wait_page_loaded()
+
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=price&way=back'
 
 
 def test_filter_max_sale(web_browser):
@@ -220,10 +200,13 @@ def test_filter_max_sale(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_max_sale.click()
+    page.wait_page_loaded()
+
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=actd&way=back'
 
 
 def test_filter_name_forward(web_browser):
@@ -231,13 +214,13 @@ def test_filter_name_forward(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_name_forward.scroll_to_element()
     page.filter_name_forward.click()
     page.wait_page_loaded()
-
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=name&way=forward'
 
 
 def test_filter_name_back(web_browser):
@@ -245,11 +228,13 @@ def test_filter_name_back(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_name_back.scroll_to_element()
     page.filter_name_back.click()
+    page.wait_page_loaded()
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=name&way=back'
 
 
 def test_filter_author_forward(web_browser):
@@ -257,11 +242,13 @@ def test_filter_author_forward(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_author_forward.scroll_to_element()
     page.filter_author_forward.click()
+    page.wait_page_loaded()
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=author&way=forward'
 
 
 def test_filter_author_back(web_browser):
@@ -269,9 +256,11 @@ def test_filter_author_back(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search.send_keys('комиксы')
+    page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
     page.filter_author_back.scroll_to_element()
     page.filter_author_back.click()
+    page.wait_page_loaded()
 
+    assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=author&way=back'

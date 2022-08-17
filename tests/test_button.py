@@ -1,6 +1,6 @@
 from pages.labirint_main import MainPage
 from selenium.webdriver import ActionChains
-
+import pytest
 
 
 def test_check_btn_labirint(web_browser):
@@ -13,26 +13,27 @@ def test_check_btn_labirint(web_browser):
     assert page.get_current_url() == "https://www.labirint.ru/"
 
 
-def test_check_btn_message(web_browser):
-    """Проверка перехода на страницу "Сообщения" """
+@pytest.mark.header_menu
+class TestHeaderMenuFromMainPage:
+    def test_check_btn_message(self, web_browser):
+        """Проверка перехода на страницу "Сообщения" """
 
-    page = MainPage(web_browser)
+        page = MainPage(self, web_browser)
 
-    page.btn_message.click()
-    text = page.auth_window.get_text()
+        page.btn_message.click()
+        text = page.auth_window.get_text()
 
-    assert text == "Полный доступ к Лабиринту"
+        assert text == "Полный доступ к Лабиринту"
 
+    def test_check_btn_my_lab(self, web_browser):
+        """Проверка кнопки "Мой Лаб" """
 
-def test_check_btn_my_lab(web_browser):
-    """Проверка кнопки "Мой Лаб" """
+        page = MainPage(self, web_browser)
 
-    page = MainPage(web_browser)
+        page.btn_my_lab.click()
+        text = page.auth_window.get_text()
 
-    page.btn_my_lab.click()
-    text = page.auth_window.get_text()
-
-    assert text == "Полный доступ к Лабиринту"
+        assert text == "Полный доступ к Лабиринту"
 
 
 def test_check_btn_postponed(web_browser):
@@ -252,19 +253,39 @@ def test_check_btn_maps(web_browser):
     assert page.get_current_url() == "https://www.labirint.ru/maps/"
 
 
-def test_btn_geolock(web_browser):
-    """Проверка смены "Местоположение" """
+# def test_btn_geolock(web_browser):
+#     """Проверка смены "Местоположение" """
+#
+#     page = MainPage(web_browser)
+#
+#     page.btn_geolock.click()
+#     page.input_city.click()
+#     page.input_city.send_keys("Москва").submit()
+#     title = page.city_title.get_attribute('title')
+#     assert title == "Москва"
+#
+#
+# def test_help_order_in_footer(web_browser):
+#     """Проверка перехода на страницу "Как сделать заказ" """
+#
+#     page = MainPage(web_browser)
+#     page.wait_page_loaded()
+#     page.btn_help_order.scroll_to_element()
+#
+#     assert page.btn_help_order.is_clickable()
+#     page.btn_help_order.click()
+#     assert page.get_current_url() == "https://www.labirint.ru/help/order/"
+#
 
-    page = MainPage(web_browser)
-
-    page.btn_geolock.click()
-    page.input_city.click()
-    page.input_city.send_keys("Москва")
-    page.input_city.send_keys(Key.enter)
-    title = page.city_title.get_attribute('title')
-    assert title == "Москва"
-
-
+# def test_help_pay(web_browser):
+#     """Проверка перехода на страницу "Самовывоз" """
+#
+#     page = MainPage(web_browser)
+#     page.wait_page_loaded()
+#     page.btn_pay.scroll_to_element()
+#     page.btn_pay.click()
+#
+#     assert page.get_current_url() == "https://www.labirint.ru/help/?clause=132"
 
 
 
