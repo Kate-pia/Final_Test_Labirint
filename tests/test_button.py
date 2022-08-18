@@ -14,11 +14,12 @@ def test_check_btn_labirint(web_browser):
 
 
 @pytest.mark.header_menu
-class TestHeaderMenuFromMainPage:
+class TestIconInMenuFromMainPage:
+
     def test_check_btn_message(self, web_browser):
         """Проверка перехода на страницу "Сообщения" """
 
-        page = MainPage(self, web_browser)
+        page = MainPage(web_browser)
 
         page.btn_message.click()
         text = page.auth_window.get_text()
@@ -28,32 +29,29 @@ class TestHeaderMenuFromMainPage:
     def test_check_btn_my_lab(self, web_browser):
         """Проверка кнопки "Мой Лаб" """
 
-        page = MainPage(self, web_browser)
+        page = MainPage(web_browser)
 
         page.btn_my_lab.click()
         text = page.auth_window.get_text()
 
         assert text == "Полный доступ к Лабиринту"
 
+    def test_check_btn_postponed(self, web_browser):
+        """Проверка перехода на страницу "Отложено" """
 
-def test_check_btn_postponed(web_browser):
-    """Проверка перехода на страницу "Отложено" """
+        page = MainPage(web_browser)
 
-    page = MainPage(web_browser)
+        page.btn_postponed.click()
 
-    page.btn_postponed.click()
+        assert page.get_current_url() == "https://www.labirint.ru/cabinet/putorder/"
 
-    assert page.get_current_url() == "https://www.labirint.ru/cabinet/putorder/"
+    def test_check_btn_cart(self, web_browser):
+        """Проверка перехода на страницу "Корзина" """
+        page = MainPage(web_browser)
 
+        page.btn_cart.click()
 
-def test_check_btn_cart(web_browser):
-    """Проверка перехода на страницу "Корзина" """
-
-    page = MainPage(web_browser)
-
-    page.btn_cart.click()
-
-    assert page.get_current_url() == "https://www.labirint.ru/cart/"
+        assert page.get_current_url() == "https://www.labirint.ru/cart/"
 
 
 def test_check_btn_books(web_browser):
@@ -220,7 +218,8 @@ def test_check_btn_sale(web_browser):
 
     page.btn_sale.click()
 
-    assert page.get_current_url() == "https://www.labirint.ru/sale/"
+    assert page.get_current_url() == "https://www.labirint.ru/search/?discount=1&available=" \
+                                     "1&order=actd&way=back&paperbooks=1&ebooks=1&otherbooks=1"
 
 
 def test_check_btn_contact(web_browser):
@@ -264,28 +263,7 @@ def test_check_btn_maps(web_browser):
 #     title = page.city_title.get_attribute('title')
 #     assert title == "Москва"
 #
-#
-# def test_help_order_in_footer(web_browser):
-#     """Проверка перехода на страницу "Как сделать заказ" """
-#
-#     page = MainPage(web_browser)
-#     page.wait_page_loaded()
-#     page.btn_help_order.scroll_to_element()
-#
-#     assert page.btn_help_order.is_clickable()
-#     page.btn_help_order.click()
-#     assert page.get_current_url() == "https://www.labirint.ru/help/order/"
-#
 
-# def test_help_pay(web_browser):
-#     """Проверка перехода на страницу "Самовывоз" """
-#
-#     page = MainPage(web_browser)
-#     page.wait_page_loaded()
-#     page.btn_pay.scroll_to_element()
-#     page.btn_pay.click()
-#
-#     assert page.get_current_url() == "https://www.labirint.ru/help/?clause=132"
 
 
 

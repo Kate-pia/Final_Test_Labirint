@@ -1,12 +1,15 @@
 from pages.labirint_main import MainPage
+import pytest
 
 
-def test_search_form_is_visible(web_browser):
-    """Строка "Поиск по Лабиринту" видна на странице"""
+@pytest.mark.elements_visible
+class TestIconInMenuFromMainPage:
+    def test_search_form_is_visible(self, web_browser):
+        """Строка "Поиск по Лабиринту" видна на странице"""
 
-    page = MainPage(web_browser)
+        page = MainPage(web_browser)
 
-    assert page.search_form.is_visible()
+        assert page.search_form.is_visible()
 
 
 def test_sec_menu_is_visible(web_browser):
@@ -18,7 +21,7 @@ def test_sec_menu_is_visible(web_browser):
 
 
 def test_header_menu_is_visible(web_browser):
-    """ Строка с главным меню товаров видно на странице """
+    """ Главное меню товаров видно на странице """
 
     page = MainPage(web_browser)
 
@@ -34,7 +37,7 @@ def test_header_icon_is_visible(web_browser):
 
 
 def test_footer_is_visible(web_browser):
-    """ Меню в подвала видно на странице"""
+    """ Меню подвала видно на странице"""
 
     page = MainPage(web_browser)
     page.scroll_down()
@@ -175,6 +178,7 @@ def test_filter_cheap(web_browser):
     page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
+    page.filter_cheap.scroll_to_element()
     page.filter_cheap.click()
     page.wait_page_loaded()
 
@@ -189,9 +193,9 @@ def test_filter_expensive(web_browser):
     page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
+    page.filter_expensive.scroll_to_element()
     page.filter_expensive.click()
     page.wait_page_loaded()
-
     assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=price&way=back'
 
 

@@ -22,7 +22,7 @@ class MainPage(WebPage):
     btn_search = WebElement(class_name='b-header-b-search-e-btn')
 
     # Названия товаров в результате поиска
-    products_titles = ManyWebElements(css_selector='.product-title-link')
+    products_titles = ManyWebElements(xpath='//*[@id ="rubric-tab"]/div[3]/div[1]/div[3]/div[1]')
 
     # Окно авторизации
     auth_window = WebElement(xpath='//div[contains(text(), "Полный доступ к Лабиринту")]')
@@ -39,7 +39,8 @@ class MainPage(WebPage):
     # кнопка "Корзина"
     btn_cart = WebElement(xpath='//span[contains(text(), "Корзина")]')
 
-    # локаторы кнопок в меню страницы
+    # локаторы кнопок главного меню страницы
+    header_menu = WebElement(xpath='//div[@class="b-header-b-menu-wrapper"]')
     # кнопка "Книги"
     btn_books = WebElement(css_selector='.b-header-b-menu-e-text[href="/books/"]')
     # кнопка "Все книги" из выпадающего списка "Книги"
@@ -66,10 +67,8 @@ class MainPage(WebPage):
     # кнопка "Клуб"
     btn_club = WebElement(css_selector='.b-header-b-menu-e-text[href="/club/"]')
 
-    # Строка меню
-    header_menu = WebElement(xpath='//div[@class="b-header-b-menu-wrapper"]')
+    # меню кнопок с основной информацией
     sec_menu = WebElement(xpath='//div[@class="b-header-b-sec-menu-wrapper relative"]')
-
     # кнопка "Доставка и оплата"
     btn_delivery = WebElement(css_selector='.b-header-b-sec-menu-e-link[href="/help/"]')
     # кнопка "Сертификаты"
@@ -101,7 +100,6 @@ class MainPage(WebPage):
     filter_cheap = WebElement(xpath='//a[contains(text(), "дешевые")]')
     # фильтр "дорогие"
     filter_expensive = WebElement(xpath='//a[contains(text(), "дорогие")]')
-    expensive = WebElement(xpath='//span[contains(text(), Сначала дорогие)]')
     # фильтр "с макс. скидкой"
     filter_max_sale = WebElement(xpath='//a[contains(text(), "с макс. скидкой")]')
     # фильтр "по названию А-Я"
