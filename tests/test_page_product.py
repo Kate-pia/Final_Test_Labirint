@@ -1,27 +1,27 @@
 from pages.product import ProductPage
-import pytest
 
 
-@pytest.mark.product
-class TestProdFromProductPage:
-    def test_add_product_in_cart(self, web_browser):
-        """Проверка добавления товара в корзину """
+def test_add_product_in_cart(web_browser):
+    """Проверка добавления товара в корзину """
 
-        page = ProductPage(web_browser)
+    page = ProductPage(web_browser)
 
-        page.btn_in_cart.click()
+    page.btn_in_cart.click()
+    page.wait_page_loaded()
 
-        assert page.counter_cart.get_text() == '1'
+    assert page.counter_cart.get_text() == '1'
 
-    def test_to_cart(self, web_browser):
-        """Проверка добавления товара в корзину """
 
-        page = ProductPage(web_browser)
+def test_to_cart(web_browser):
+    """Проверка добавления товара в корзину """
 
-        page.btn_in_cart.click()
-        page.btn_to_cart.click()
+    page = ProductPage(web_browser)
 
-        assert page.counter_cart.get_text() == '1'
+    page.btn_in_cart.click()
+    page.btn_to_cart.click()
+
+    assert page.get_current_url() == 'https://www.labirint.ru/cart/'
+    assert page.counter_cart.get_text() == '1'
 
 
 def test_add_in_postponed(web_browser):

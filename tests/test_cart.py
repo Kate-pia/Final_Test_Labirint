@@ -48,9 +48,8 @@ def test_increase_product_in_cart(web_browser):
     page_cart.quantity.scroll_to_element()
     page_cart.quantity.send_keys("2")
     page_cart.wait_page_loaded()
-    page_cart.btn_lessen.click()
-    page_cart.wait_page_loaded()
-    assert page_cart.counter_cart.get_text() == '1'
+
+    assert page_cart.counter_cart.get_text() == '2'
 
 
 def test_btn_increase_product_in_cart(web_browser):

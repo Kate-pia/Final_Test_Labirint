@@ -45,15 +45,21 @@ def test_footer_is_visible(web_browser):
     assert page.footer.is_visible()
 
 
-def test_check_main_search(web_browser):
+@pytest.mark.parametrize("param", ['тестирование', 'python'])
+def test_check_main_search(web_browser, param):
     """Проверка поля "Поиск по Лабиринту" """
 
     page = MainPage(web_browser)
 
-    page.search = 'детектив'
+    page.search.send_keys(param)
     page.btn_search.click()
 
     assert page.products_titles.count() >= 1
+
+    # Проверяем, что пользователь нашел соответствующие товары
+    for title in page.products_titles.get_text():
+        msg = 'Wrong product in search "{}"'.format(title)
+        assert param in title.lower(), msg
 
 
 def test_check_wrong_input_in_search(web_browser):
@@ -61,8 +67,8 @@ def test_check_wrong_input_in_search(web_browser):
 
     page = MainPage(web_browser)
 
-    # Попробуйте ввести запрос "Детектив" с английской раскладки:
-    page.search = 'Ujujkm'
+    # Проверка ввода запроса "тестирование" с английской раскладки:
+    page.search.send_keys('ntcnbhjdfybt')
     page.btn_search.click()
 
     #  Проверяем, что пользователь может видеть список товаров
@@ -71,7 +77,7 @@ def test_check_wrong_input_in_search(web_browser):
     # Проверяем, что пользователь нашел соответствующие товары
     for title in page.products_titles.get_text():
         msg = 'Wrong product in search "{}"'.format(title)
-        assert 'гоголь' in title.lower(), msg
+        assert 'тестирование' in title.lower(), msg
 
 
 def test_check_input_numbers_in_search(web_browser):
@@ -97,7 +103,7 @@ def test_title_product(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search = 'детектив'
+    page.search.send_keys('детектив')
     page.btn_search.click()
 
     assert page.products_titles.get_attribute('title') != ''
@@ -108,13 +114,12 @@ def test_photo_product(web_browser):
 
     page = MainPage(web_browser)
 
-    page.search = 'детектив'
+    page.search.send_keys('детектив')
     page.btn_search.click()
 
     assert page.products_titles.get_attribute('src') != ''
 
 
-# Проверка фильтров
 def test_filter_relevance(web_browser):
     """Проверка фильтра "релевантные" """
 
@@ -193,9 +198,12 @@ def test_filter_expensive(web_browser):
     page.search.send_keys('python')
     page.btn_search.click()
     page.filter_list.click()
+    page.wait_page_loaded()
+    page.filter_cheap.scroll_to_element()
     page.filter_expensive.scroll_to_element()
     page.filter_expensive.click()
     page.wait_page_loaded()
+
     assert page.get_current_url() == 'https://www.labirint.ru/search/python/?stype=0&order=price&way=back'
 
 
