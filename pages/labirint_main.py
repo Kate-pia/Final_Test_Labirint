@@ -24,6 +24,9 @@ class MainPage(WebPage):
     # Названия товаров в результате поиска
     products_titles = ManyWebElements(xpath='//*[@id ="rubric-tab"]/div[3]/div[1]/div[3]/div[1]')
 
+    # Пример выбранного товара
+    product = WebElement(css_selector='.product-title-link[href="/books/829644/"]')
+
     # Окно авторизации
     auth_window = WebElement(xpath='//div[contains(text(), "Полный доступ к Лабиринту")]')
 
@@ -113,20 +116,3 @@ class MainPage(WebPage):
 
     # "подвал" страницы
     footer = WebElement(xpath='//div[@class="b-rfooter-wrapper"]')
-
-
-    # btn_help_order = WebElement(xpath='//*[@id="body-top"]/div[5]/div[2]/div/div[4]/div[2]/div[2]/ul/li[2]/a')
-    btn_pay = WebElement(css_selector='.b-rfooter-e-item[href="/help/?clause=132"]')
-    # btn_help_order = WebElement(css_selector='b-rfooter-e-item-link analytics-click-js[href="/help/order/"]')
-    btn_help_order = WebElement(xpath='//a[contains(text(), "Как сделать заказ")]')
-
-
-
-
-
-
-
-
-
-
-

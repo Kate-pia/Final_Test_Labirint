@@ -1,15 +1,15 @@
+# для запуска тестов перейдите в папку tests введя команду cd tests,
+# после чего введите в терминале команду pytest -v test_labirint.py
 from pages.labirint_main import MainPage
 import pytest
 
 
-@pytest.mark.elements_visible
-class TestIconInMenuFromMainPage:
-    def test_search_form_is_visible(self, web_browser):
-        """Строка "Поиск по Лабиринту" видна на странице"""
+def test_search_form_is_visible(web_browser):
+    """Строка "Поиск по Лабиринту" видна на странице"""
 
-        page = MainPage(web_browser)
+    page = MainPage(web_browser)
 
-        assert page.search_form.is_visible()
+    assert page.search_form.is_visible()
 
 
 def test_sec_menu_is_visible(web_browser):
@@ -96,6 +96,20 @@ def test_check_input_numbers_in_search(web_browser):
     for title in page.products_titles.get_text():
         msg = 'Wrong product in search "{}"'.format(title)
         assert '125' in title.lower(), msg
+
+
+def test_selection_product(web_browser):
+    """ Проверка выбора товара после поиска """
+
+    page = MainPage(web_browser)
+
+    page.search.send_keys('тестирование')
+    page.btn_search.click()
+    page.product.scroll_to_element()
+    page.product.click()
+    page.wait_page_loaded()
+
+    assert page.get_current_url() == 'https://www.labirint.ru/books/829644/'
 
 
 def test_title_product(web_browser):

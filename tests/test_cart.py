@@ -1,3 +1,5 @@
+# для запуска тестов перейдите в папку tests введя команду cd tests,
+# после чего введите в терминале команду pytest -v test_cart.py
 from pages.cart import CartPage
 from pages.product import ProductPage
 
@@ -36,7 +38,7 @@ def test_restore_cart(web_browser):
 
 
 def test_increase_product_in_cart(web_browser):
-    """Проверка поля увеличения количества товара """
+    """Проверка поля увеличения количества товара в корзине"""
 
     page = ProductPage(web_browser)
 
@@ -63,9 +65,11 @@ def test_btn_increase_product_in_cart(web_browser):
     page_cart = CartPage(web_browser)
 
     assert page_cart.counter_cart.get_text() == '1'
+
     page_cart.quantity.scroll_to_element()
     page_cart.btn_increase.click()
     page_cart.wait_page_loaded()
+
     assert page_cart.counter_cart.get_text() == '2'
 
 
@@ -97,14 +101,8 @@ def test_checkout_order(web_browser):
 
     page_cart = CartPage(web_browser)
 
-    assert page_cart.counter_cart.get_text() == '1'
-
+    # page_cart.btn_checkout.scroll_to_element()
     page_cart.btn_checkout.click()
+    page.wait_page_loaded()
 
     assert page_cart.get_current_url() == "https://www.labirint.ru/basket/checkout/"
-
-
-
-
-
-

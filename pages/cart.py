@@ -33,6 +33,4 @@ class CartPage(WebPage):
     btn_lessen = WebElement(xpath='//span[@class="btn btn-lessen btn-lessen-cart"]')
 
     # Кнопка "Перейти к оформлению"
-    btn_checkout = WebElement(xpath='//*[@id="cart-total-default"]/button[1]')
-
-
+    btn_checkout = WebElement(css_selector='.btn.btn-primary.btn-large.fright.start-checkout-js')

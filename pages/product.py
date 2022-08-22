@@ -11,6 +11,7 @@ class ProductPage(WebPage):
 
         super().__init__(web_driver, url)
 
+    # Локаторы для страницы товара
     # кнопка "Добавить в корзину"
     btn_in_cart = WebElement(css_selector='.btn.btn-small.btn-primary.btn-buy')
     # кнопка "Оформить"
